@@ -2,13 +2,17 @@ version: "3.7"
 
 services:
   ssh-log-to-influx:
-    image: acouvreur/ssh-log-to-influx
+    image: rolfrander/geohashlog
     build: ./
     restart: always
     environment:
-      - INFLUX_URL=influxdb
+      - INFLUX_URL=mozart
       - INFLUX_DB=geoloc
       - INFLUX_USER
       - INFLUX_PWD
+      - INFLUX_PROTOCOL=https
+      - DEBUG_LEVEL=debug
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
+
     ports:
       - 7070:7070/tcp
