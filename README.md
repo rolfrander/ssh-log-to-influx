@@ -1,8 +1,10 @@
 # Visualize bruteforce SSH attacker's location in real time
 
-![Build, test and deploy](https://github.com/acouvreur/ssh-log-to-influx/workflows/Build,%20test%20and%20deploy/badge.svg)
+Forked from [acouvreur/ssh-log-to-influx](https://github.com/acouvreur/ssh-log-to-influx)
 
 Thanks to Schkn for its original post https://devconnected.com/geolocating-ssh-hackers-in-real-time/
+
+Geotagging of log-entries from failed ssh logins, as well as PF-sense filterlog.
 
 ## Preview
 
@@ -25,6 +27,10 @@ if $programname == 'sshd' then {
    if $msg startswith ' Failed' then {
       action(type="omfwd" target="127.0.0.1" port="7070" protocol="tcp" template="OnlyMsg")
    }
+}
+
+if $programname == 'filterlog' then {
+   action(type="omfwd" target="127.0.0.1" port="7070" protocol="tcp" template="OnlyMsg")
 }
 ```
 
