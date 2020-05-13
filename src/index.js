@@ -59,7 +59,7 @@ async function receiveSshLog(data) {
 		logger.debug("no match for ssh log");
 		return false;
 	}
-	
+
 	logger.debug(`Parsed ${sshmsg.username} ${sshmsg.ip} ${sshmsg.port}`)
 
 	const ipLocation = await doApiCall(sshmsg.ip);
@@ -106,7 +106,7 @@ async function receiveFilterlog(data) {
 		logger.debug(`ignore private address: ${filterlog.ip}`);
 		return true;
 	}
-	
+
 	logger.debug(`Parsed filterlog ${filterlog.ip} ${filterlog.port}`)
 
 	const ipLocation = await doApiCall(filterlog.ip);
@@ -131,9 +131,9 @@ async function receiveFilterlog(data) {
 			tags: {
 				geohash: geohashed,
 				action: filterlog.action,
-				port: filterlog.port,
+				dstport: filterlog.dstport,
 				ip: filterlog.ip,
-				proto: filterlog.proto,
+				protocol: filterlog.protocol,
 				location: `${ipLocation.regionName}, ${ipLocation.city}`,
 				...others
 			}
@@ -142,4 +142,3 @@ async function receiveFilterlog(data) {
 
 	return true;
 }
-
